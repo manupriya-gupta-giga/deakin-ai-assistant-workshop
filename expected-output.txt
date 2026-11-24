@@ -1,0 +1,307 @@
+python3 demo.py 
+PASS  unique match: {'status': 'ready', 'event_ids': ['E1']}
+PASS  no matching topic: {'status': 'no_match', 'event_ids': []}
+PASS  valid empty search: {'status': 'no_match', 'event_ids': []}
+PASS  missing source time: {'status': 'source_incomplete', 'event_ids': []}
+PASS  conflicting records: {'status': 'source_conflict', 'event_ids': []}
+PASS  source timeout: {'status': 'source_unavailable', 'event_ids': []}
+PASS  two beginner events: {'status': 'clarify', 'event_ids': ['E1', 'E3']}
+PASS  advanced event first: {'status': 'ready', 'event_ids': ['E1']}
+
+8/8 fictional cases passed.
+
+
+python3 demo.py --buggy
+PASS  unique match: {'status': 'ready', 'event_ids': ['E1']}
+PASS  no matching topic: {'status': 'no_match', 'event_ids': []}
+PASS  valid empty search: {'status': 'no_match', 'event_ids': []}
+PASS  missing source time: {'status': 'source_incomplete', 'event_ids': []}
+PASS  conflicting records: {'status': 'source_conflict', 'event_ids': []}
+PASS  source timeout: {'status': 'source_unavailable', 'event_ids': []}
+FAIL  two beginner events: {'status': 'ready', 'event_ids': ['E1']}
+FAIL  advanced event first: {'status': 'ready', 'event_ids': ['E2']}
+
+6/8 fictional cases passed.
+
+
+python3 demo.py --json
+PASS  unique match: {'status': 'ready', 'event_ids': ['E1']}
+PASS  no matching topic: {'status': 'no_match', 'event_ids': []}
+PASS  valid empty search: {'status': 'no_match', 'event_ids': []}
+PASS  missing source time: {'status': 'source_incomplete', 'event_ids': []}
+PASS  conflicting records: {'status': 'source_conflict', 'event_ids': []}
+PASS  source timeout: {'status': 'source_unavailable', 'event_ids': []}
+PASS  two beginner events: {'status': 'clarify', 'event_ids': ['E1', 'E3']}
+PASS  advanced event first: {'status': 'ready', 'event_ids': ['E1']}
+
+8/8 fictional cases passed.
+[
+  {
+    "case": "unique match",
+    "request": {
+      "topic": "AI",
+      "level": "beginner"
+    },
+    "source_status": "ok",
+    "source_records": [
+      {
+        "id": "E1",
+        "title": "Intro AI",
+        "topic": "AI",
+        "level": "beginner",
+        "time": "Friday 16:00",
+        "timezone": "Australia/Melbourne"
+      },
+      {
+        "id": "E2",
+        "title": "AI Project Studio",
+        "topic": "AI",
+        "level": "advanced",
+        "time": "Friday 18:00",
+        "timezone": "Australia/Melbourne"
+      }
+    ],
+    "observed": {
+      "status": "ready",
+      "event_ids": [
+        "E1"
+      ]
+    },
+    "expected": {
+      "status": "ready",
+      "event_ids": [
+        "E1"
+      ]
+    },
+    "passed": true
+  },
+  {
+    "case": "no matching topic",
+    "request": {
+      "topic": "biology",
+      "level": "beginner"
+    },
+    "source_status": "ok",
+    "source_records": [
+      {
+        "id": "E1",
+        "title": "Intro AI",
+        "topic": "AI",
+        "level": "beginner",
+        "time": "Friday 16:00",
+        "timezone": "Australia/Melbourne"
+      },
+      {
+        "id": "E2",
+        "title": "AI Project Studio",
+        "topic": "AI",
+        "level": "advanced",
+        "time": "Friday 18:00",
+        "timezone": "Australia/Melbourne"
+      }
+    ],
+    "observed": {
+      "status": "no_match",
+      "event_ids": []
+    },
+    "expected": {
+      "status": "no_match",
+      "event_ids": []
+    },
+    "passed": true
+  },
+  {
+    "case": "valid empty search",
+    "request": {
+      "topic": "AI",
+      "level": "beginner"
+    },
+    "source_status": "ok",
+    "source_records": [],
+    "observed": {
+      "status": "no_match",
+      "event_ids": []
+    },
+    "expected": {
+      "status": "no_match",
+      "event_ids": []
+    },
+    "passed": true
+  },
+  {
+    "case": "missing source time",
+    "request": {
+      "topic": "AI",
+      "level": "beginner"
+    },
+    "source_status": "ok",
+    "source_records": [
+      {
+        "id": "E1",
+        "title": "Intro AI",
+        "topic": "AI",
+        "level": "beginner",
+        "timezone": "Australia/Melbourne"
+      }
+    ],
+    "observed": {
+      "status": "source_incomplete",
+      "event_ids": []
+    },
+    "expected": {
+      "status": "source_incomplete",
+      "event_ids": []
+    },
+    "passed": true
+  },
+  {
+    "case": "conflicting records",
+    "request": {
+      "topic": "AI",
+      "level": "beginner"
+    },
+    "source_status": "ok",
+    "source_records": [
+      {
+        "id": "E1",
+        "title": "Intro AI",
+        "topic": "AI",
+        "level": "beginner",
+        "time": "Friday 16:00",
+        "timezone": "Australia/Melbourne"
+      },
+      {
+        "id": "E1",
+        "title": "Intro AI",
+        "topic": "AI",
+        "level": "beginner",
+        "time": "Friday 17:00",
+        "timezone": "Australia/Melbourne"
+      }
+    ],
+    "observed": {
+      "status": "source_conflict",
+      "event_ids": []
+    },
+    "expected": {
+      "status": "source_conflict",
+      "event_ids": []
+    },
+    "passed": true
+  },
+  {
+    "case": "source timeout",
+    "request": {
+      "topic": "AI",
+      "level": "beginner"
+    },
+    "source_status": "timeout",
+    "source_records": [
+      {
+        "id": "E1",
+        "title": "Intro AI",
+        "topic": "AI",
+        "level": "beginner",
+        "time": "Friday 16:00",
+        "timezone": "Australia/Melbourne"
+      },
+      {
+        "id": "E2",
+        "title": "AI Project Studio",
+        "topic": "AI",
+        "level": "advanced",
+        "time": "Friday 18:00",
+        "timezone": "Australia/Melbourne"
+      }
+    ],
+    "observed": {
+      "status": "source_unavailable",
+      "event_ids": []
+    },
+    "expected": {
+      "status": "source_unavailable",
+      "event_ids": []
+    },
+    "passed": true
+  },
+  {
+    "case": "two beginner events",
+    "request": {
+      "topic": "AI",
+      "level": "beginner"
+    },
+    "source_status": "ok",
+    "source_records": [
+      {
+        "id": "E1",
+        "title": "Intro AI",
+        "topic": "AI",
+        "level": "beginner",
+        "time": "Friday 16:00",
+        "timezone": "Australia/Melbourne"
+      },
+      {
+        "id": "E3",
+        "title": "AI Starter Lab",
+        "topic": "AI",
+        "level": "beginner",
+        "time": "Friday 16:00",
+        "timezone": "Australia/Melbourne"
+      }
+    ],
+    "observed": {
+      "status": "clarify",
+      "event_ids": [
+        "E1",
+        "E3"
+      ]
+    },
+    "expected": {
+      "status": "clarify",
+      "event_ids": [
+        "E1",
+        "E3"
+      ]
+    },
+    "passed": true
+  },
+  {
+    "case": "advanced event first",
+    "request": {
+      "topic": "AI",
+      "level": "beginner"
+    },
+    "source_status": "ok",
+    "source_records": [
+      {
+        "id": "E2",
+        "title": "AI Project Studio",
+        "topic": "AI",
+        "level": "advanced",
+        "time": "Friday 18:00",
+        "timezone": "Australia/Melbourne"
+      },
+      {
+        "id": "E1",
+        "title": "Intro AI",
+        "topic": "AI",
+        "level": "beginner",
+        "time": "Friday 16:00",
+        "timezone": "Australia/Melbourne"
+      }
+    ],
+    "observed": {
+      "status": "ready",
+      "event_ids": [
+        "E1"
+      ]
+    },
+    "expected": {
+      "status": "ready",
+      "event_ids": [
+        "E1"
+      ]
+    },
+    "passed": true
+  }
+]
